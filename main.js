@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Vesper', location: 'Juperos Core', respawn: 120, size: 'Large' }, // NEED
         { name: 'Gloom Under Night', location: 'Rachel Sanctuary 5', respawn: 300, size: 'Large' },
         { name: 'White Lady', location: 'Louyang Dungeon 3', respawn: 117, size: 'Large' },
-        { name: 'Fallen Bishop', location: 'Cursed Monastery 2', respawn: 120, size: 'Medium' }, // NEED
+        { name: 'Fallen Bishop', location: 'Cursed Monastery 2', respawn: 130, size: 'Medium' }, // NEED
         { name: 'Baphomet', location: 'Labyrinth Forest 3', respawn: 120, size: 'Large' },
         { name: 'Dark Lord', location: 'Glast Heim Chuchyard', respawn: 66, size: 'Large' },
         { name: 'Detardeurus', location: 'Abyss Lake 3', respawn: 180, size: 'Large' },
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const padding_minutes = 5;
         const killHour = parseInt(killTime[0], 10);
-        const killMinute = parseInt(killTime[1], 10) + padding_minutes;
+        const killMinute = parseInt(killTime[1], 10);
         const respawnTime = selectedMvp.respawn;
         
         let totalMinutes = killHour * 60 + killMinute + respawnTime;
