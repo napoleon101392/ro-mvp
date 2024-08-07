@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <title>Respawn List</title>
+</head>
+<body>
+  <div class="container mt-5">
+      <div class="row justify-content-center">
+          <div class="col-md-8">
+            <h1>Ragnarok MVP Timer</h1>
+              <div class="form-group">
+                  <label for="mvpSelect">Select MVP:</label>
+                  <select id="mvp-select" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <label for="kill-time">Kill Time (HH:MM):</label>
+                <input type="text" id="kill-time" placeholder="e.g., 18:31" class="form-control">
+              </div>
+              <button id="calculate-btn" class="btn btn-primary">Add MVP</button>
+              <ul id="respawn-list" class="list-group mt-3"></ul>
+          </div>
+      </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
