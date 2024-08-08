@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getMvpList() {
     return [
-        { name: 'Eddga', location: 'Payon Field 10', respawn: 120, size: 'Large', imageUrl: 'images/monster/Eddga.gif' },
+        { name: 'Eddga', location: 'Payon Field 10', respawn: 1, size: 'Large', imageUrl: 'images/monster/Eddga.gif' },
         { name: 'Tao Gunka', location: 'Beach Dungeon, West Cave', respawn: 300, size: 'Small', imageUrl: 'images/monster/TaoGunka.gif' },
         { name: 'Amon Ra', location: 'Morroc Pyramid B2F', respawn: 68, size: 'Medium', imageUrl: 'images/monster/AmonRa.gif' },
         { name: 'Dracula', location: 'Geffen Dungeon 2', respawn: 60, size: 'Medium', imageUrl: 'images/monster/Dracula.gif' },
