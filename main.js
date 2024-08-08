@@ -199,7 +199,7 @@ function startCountdown(listItem, selectedMvp, formattedTime, respawnDate, respa
             }
             const spawnTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }); // Get the current time in 12-hour format
             sendDiscordAlert(`${selectedMvp.name}(${selectedMvp.size}) has respawned!`);
-            showAlertWithImage(`${selectedMvp.name}(${selectedMvp.size}) has respawned!`, selectedMvp.imageUrl, selectedMvp.location, spawnTime);
+            showAlertWithImage(`${selectedMvp.name}(${selectedMvp.size}) has respawned!`, selectedMvp, spawnTime);
             return;
         }
 
@@ -219,7 +219,7 @@ function startCountdown(listItem, selectedMvp, formattedTime, respawnDate, respa
     }, 1000);
 }
 
-function showAlertWithImage(message, imageUrl, location, spawnTime) {
+function showAlertWithImage(message, mvp, spawnTime) {
     // Ensure there is a container for alerts
     let alertContainer = document.getElementById('alert-container');
     if (!alertContainer) {
@@ -238,8 +238,8 @@ function showAlertWithImage(message, imageUrl, location, spawnTime) {
     alertDiv.style.marginTop = '10px'; // Ensure alerts overlap each other
 
     const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = 'MVP Image';
+    img.src = mvp.imageUrl;
+    img.alt = mvp.name;
     img.style.width = '100px'; // Adjust size as needed
     img.style.height = '100px'; // Adjust size as needed
     img.style.display = 'block';
@@ -247,16 +247,19 @@ function showAlertWithImage(message, imageUrl, location, spawnTime) {
 
     const text = document.createElement('p');
     text.textContent = message;
-
+    
     const locationText = document.createElement('p');
-    locationText.textContent = `Location: ${location}`;
-
+    locationText.textContent = `Location: ${mvp.location}`;
+    
     const spawnTimeText = document.createElement('p');
     spawnTimeText.textContent = `Spawned at: ${spawnTime}`;
-
+    
     const closeButton = document.createElement('button');
     closeButton.className = 'btn btn-danger';
     closeButton.textContent = 'Close';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '10px';
     closeButton.onclick = () => {
         alertContainer.removeChild(alertDiv);
     };
