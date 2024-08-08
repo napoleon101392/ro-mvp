@@ -1,8 +1,0 @@
-{
-  "name": "Respawn List",
-  "short_name": "Respawn",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff"
-}

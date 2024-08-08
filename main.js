@@ -10,10 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateBtn.addEventListener('click', function() {
         handleCalculateButtonClick(mvpList, mvpSelect, killTimeInput, respawnList);
     });
-
-    if ('serviceWorker' in navigator) {
-        registerServiceWorker();
-    }
 });
 
 function getMvpList() {
@@ -284,15 +280,4 @@ function sendDiscordAlert(message) {
             content: message,
         }),
     }).catch(error => console.error('Error sending Discord alert:', error));
-}
-
-function registerServiceWorker() {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, error => {
-                console.log('ServiceWorker registration failed: ', error);
-            });
-    });
 }
