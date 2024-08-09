@@ -77,19 +77,15 @@ function handleCalculateButtonClick(mvpList, mvpSelect, killTimeInput, respawnLi
     const now = new Date();
     let diff = calculateTimeDifference(respawnDate, now);
 
-    if (diff < 0) {
-        displayError('Error: Respawn time has already passed!');
-    } else {
-        if (isMvpAlreadyInList(respawnList, selectedMvp.name)) {
-            alert(`MVP ${selectedMvp.name} is already in the respawn list.`);
-            return;
-        }
-
-        const listItem = createListItem(selectedMvp, formattedTime, diff, respawnDate, respawnList);
-        respawnList.appendChild(listItem);
-        sortRespawnList(respawnList);
-        startCountdown(listItem, selectedMvp, formattedTime, respawnDate, respawnList);
+    if (respawnDate < now) {
+        displayError('Invalid kill time. Please select a future time.');
+        return;
     }
+
+    const listItem = createListItem(selectedMvp, formattedTime, diff, respawnDate, respawnList);
+    respawnList.appendChild(listItem);
+    sortRespawnList(respawnList);
+    startCountdown(listItem, selectedMvp, formattedTime, respawnDate, respawnList);
 }
 
 function getCurrentMilitaryTime() {
@@ -113,9 +109,8 @@ function calculateRespawnDate(killTime, respawnTime) {
     const respawnDate = new Date();
     respawnDate.setHours(respawnHour, respawnMinute, 0, 0);
 
-    const now = new Date();
-    let timeDifference = (now - respawnDate) / (1000 * 60 * 60);
-    if (timeDifference > 24) {
+    // Adjust the date if the respawn time is on the next day
+    if (respawnHour < killHour || (respawnHour === killHour && respawnMinute < killMinute)) {
         respawnDate.setDate(respawnDate.getDate() + 1);
     }
 
@@ -168,6 +163,7 @@ function createRemoveButton(listItem, respawnList) {
     removeButton.className = 'btn btn-danger btn-sm ml-auto';
     removeButton.addEventListener('click', () => {
         if (respawnList.contains(listItem)) {
+            clearInterval(listItem.countdownInterval); // Clear the interval
             respawnList.removeChild(listItem);
         } else {
             console.error('Attempted to remove a list item that is not a child of respawnList.');
@@ -207,10 +203,10 @@ function startCountdown(listItem, selectedMvp, formattedTime, respawnDate, respa
     }
 
     updateCountdown();
-    const countdownInterval = setInterval(() => {
+    listItem.countdownInterval = setInterval(() => {
         updateCountdown();
         if (calculateTimeDifference(respawnDate, new Date()) < 0) {
-            clearInterval(countdownInterval);
+            clearInterval(listItem.countdownInterval);
         }
     }, 1000);
 }
