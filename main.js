@@ -72,6 +72,12 @@ function handleCalculateButtonClick(mvpList, mvpSelect, killTimeInput, respawnLi
         killTime = getCurrentMilitaryTime().split(':');
     }
 
+    // Check if the MVP is already in the respawn list
+    if (isMvpAlreadyInList(respawnList, selectedMvp.name)) {
+        displayError(`${selectedMvp.name} is already in the respawn list.`);
+        return;
+    }
+
     const respawnDate = calculateRespawnDate(killTime, selectedMvp.respawn);
     const formattedTime = formatTime(respawnDate);
     const now = new Date();
@@ -110,9 +116,9 @@ function calculateRespawnDate(killTime, respawnTime) {
     respawnDate.setHours(respawnHour, respawnMinute, 0, 0);
 
     // Adjust the date if the respawn time is on the next day
-    if (respawnHour < killHour || (respawnHour === killHour && respawnMinute < killMinute)) {
-        respawnDate.setDate(respawnDate.getDate() + 1);
-    }
+    // if (respawnHour < killHour || (respawnHour === killHour && respawnMinute < killMinute)) {
+    //     respawnDate.setDate(respawnDate.getDate());
+    // }
 
     return respawnDate;
 }
