@@ -270,7 +270,7 @@ function showAlertWithImage(message, mvp, spawnTime) {
 }
 
 function sendDiscordAlert(message) {
-    const webhookUrl = 'https://discord.com/api/webhooks/1266272153620447325/NVSypwxpOjj83CWdDF3H9o_KgSb1fp2E5CNoZ_x9eFwEUy0hN2ZrVjO0ZaIwhu97vXL_';
+    const webhookUrl = '';
     fetch(webhookUrl, {
         method: 'POST',
         headers: {
