@@ -18,6 +18,7 @@ function getMvpList() {
         { name: 'Atroce', location: 'Rachel Field 02', respawn: 240, size: 'Large', imageUrl: 'images/monster/Atroce.gif' },
         { name: 'Baphomet', location: 'Labyrinth Forest 3', respawn: 120, size: 'Large', imageUrl: 'images/monster/Baphomet.gif' },
         { name: 'Beelzebub', location: 'Cursed Monastery 3', respawn: 720, size: 'Large', imageUrl: 'images/monster/Beelzebub.gif' },
+        { name: 'Cecil Damon', location: 'Bio Lab 3', respawn: 120, size: 'Medium', imageUrl: 'images/monster/CecilDamon.gif' },
         { name: 'Dark Lord', location: 'Glast Heim Chuchyard', respawn: 66, size: 'Large', imageUrl: 'images/monster/DarkLord.gif' },
         { name: 'Detardeurus', location: 'Abyss Lake 3', respawn: 180, size: 'Large', imageUrl: 'images/monster/Detardeurus.gif' },
         { name: 'Doppelganger', location: 'Geffen Dungeon 3', respawn: 120, size: 'Medium', imageUrl: 'images/monster/Doppelganger.gif' },
@@ -25,16 +26,20 @@ function getMvpList() {
         { name: 'Drake', location: 'Sunken Ship 2', respawn: 120, size: 'Large', imageUrl: 'images/monster/Drake.gif' },
         { name: 'Eddga', location: 'Payon Field 10', respawn: 120, size: 'Large', imageUrl: 'images/monster/Eddga.gif' },
         { name: 'Egnigem Cenia', location: 'Somatology Laboratory 2', respawn: 120, size: 'Medium', imageUrl: 'images/monster/EgnigemCenia.gif' },
+        { name: 'Eremes Guile', location: 'Bio Lab 3', respawn: 120, size: 'Medium', imageUrl: 'images/monster/EremesGuile.gif' },
         { name: 'Evil Snake Lord', location: 'Kunlun Dungeon 3', respawn: 102, size: 'Large', imageUrl: 'images/monster/EvilSnakeLord.gif' },
         { name: 'Fallen Bishop', location: 'Cursed Monastery 2', respawn: 120, size: 'Medium', imageUrl: 'images/monster/FallenBishop.gif' },
         { name: 'Garm', location: 'Lutie Field', respawn: 120, size: 'Large', imageUrl: 'images/monster/Garm.gif' },
         { name: 'Gloom Under Night', location: 'Rachel Sanctuary 5', respawn: 300, size: 'Large', imageUrl: 'images/monster/GloomUnderNight.gif' },
         { name: 'Golden Thief Bug', location: 'Prontera Culvert 4', respawn: 60, size: 'Small', imageUrl: 'images/monster/GoldenThiefBug.gif' },
         { name: 'Gopinch', location: 'Dremuchi Forest', respawn: 125, size: 'Medium', imageUrl: 'images/monster/Gopinch.gif' },
+        { name: 'Howard Alt-Eisen', location: 'Bio Lab 3', respawn: 120, size: 'Large', imageUrl: 'images/monster/HowardAltEisen.gif' },
         { name: 'Ifrit', location: 'Thor\'s Volcano 3', respawn: 660, size: 'Large', imageUrl: 'images/monster/Ifrit.gif' },
+        { name: 'Kathryne Keyron', location: 'Bio Lab 3', respawn: 120, size: 'Medium', imageUrl: 'images/monster/KathryneKeyron.gif' },
         { name: 'Kiel-D-01', location: 'Kiel Dungeon 2', respawn: 120, size: 'Medium', imageUrl: 'images/monster/KielD01.gif' },
         { name: 'Lady Tanee', location: 'Ayothaya Dungeon 2', respawn: 420, size: 'Small', imageUrl: 'images/monster/LadyTanee.gif' },
         { name: 'Lord of the Dead', location: 'Niflheim', respawn: 133, size: 'Large', imageUrl: 'images/monster/LordoftheDead.gif' },
+        { name: 'Margaretha Sorin', location: 'Bio Lab 3', respawn: 120, size: 'Medium', imageUrl: 'images/monster/MargarethaSorin.gif' },
         { name: 'Maya', location: 'Ant Hell 2', respawn: 130, size: 'Large', imageUrl: 'images/monster/Maya.gif' },
         { name: 'Mistress', location: 'Mt. Mjolnir 4', respawn: 120, size: 'Small', imageUrl: 'images/monster/Mistress.gif' },
         { name: 'Moonlight Flower', location: 'Payon Cave 5', respawn: 60, size: 'Small', imageUrl: 'images/monster/MoonlightFlower.gif' },
@@ -45,13 +50,14 @@ function getMvpList() {
         { name: 'Phreeoni', location: 'Morroc Field 15', respawn: 120, size: 'Medium', imageUrl: 'images/monster/Phreeoni.gif' },
         { name: 'RSX 0806', location: 'Mine Dungeon 2', respawn: 130, size: 'Large', imageUrl: 'images/monster/RSX0806.gif' },
         { name: 'Samurai Specter', location: 'Amatsu Dungeon 3', respawn: 96, size: 'Large', imageUrl: 'images/monster/SamuraiSpecter.gif' },
+        { name: 'Seyren Windsor', location: 'Bio Lab 3', respawn: 120, size: 'Large', imageUrl: 'images/monster/SeyrenWindsor.gif' },
         { name: 'Stormy Knight', location: 'Toy Factory 2', respawn: 60, size: 'Medium', imageUrl: 'images/monster/StormyKnight.gif' },
         { name: 'Tao Gunka', location: 'Beach Dungeon, West Cave', respawn: 300, size: 'Small', imageUrl: 'images/monster/TaoGunka.gif' },
         { name: 'Turtle General', location: 'Turtle Island 4', respawn: 63, size: 'Large', imageUrl: 'images/monster/TurtleGeneral.gif' },
         { name: 'Valkyrie Randgris', location: 'Odin Shrine 3', respawn: 480, size: 'Large', imageUrl: 'images/monster/ValkyrieRandgris.gif' },
         { name: 'Vesper', location: 'Juperos Core', respawn: 120, size: 'Large', imageUrl: 'images/monster/Vesper.gif' },
         { name: 'White Lady', location: 'Louyang Dungeon 3', respawn: 117, size: 'Large', imageUrl: 'images/monster/WhiteLady.gif' },
-        { name: 'Wounded Morocc', location: 'Dimensional Gorge', respawn: 720, size: 'Large', imageUrl: 'images/monster/WoundedMorocc.gif' }        
+        { name: 'Wounded Morocc', location: 'Dimensional Gorge', respawn: 720, size: 'Large', imageUrl: 'images/monster/WoundedMorocc.gif' },      
     ];
 }
 
@@ -64,9 +70,39 @@ function populateMvpDropdown(mvpList, mvpSelect) {
     });
 }
 
+function formatTimeInput(input) {
+    // Step 1: Check if the input contains a colon
+    if (input.includes(':')) {
+        return input;
+    }
+
+    // Step 2: Determine the position to insert the colon
+    let position;
+    if (input.length % 2 === 0) {
+        // Even length: insert in the center
+        position = input.length / 2;
+    } else {
+        // Odd length: insert after the first digit
+        position = 1;
+    }
+
+    // Step 3: Insert the colon at the determined position
+    return input.slice(0, position) + ':' + input.slice(position);
+}
+
 function handleCalculateButtonClick(mvpList, mvpSelect, killTimeInput, respawnList) {
     const selectedMvp = mvpList.find(mvp => mvp.name === mvpSelect.value);
     let killTime = killTimeInput.value.split(':');
+
+    if (killTime[0] > 24) {
+        displayError('Invalid hours');
+        return;
+    }
+
+    if (killTime[1] > 59) {
+        displayError('Invalid minutes');
+        return;
+    }
 
     if (!killTimeInput.value) {
         killTime = getCurrentMilitaryTime().split(':');
@@ -253,8 +289,8 @@ function showAlertWithImage(message, mvp, spawnTime) {
     spawnTimeText.textContent = `Spawned at: ${spawnTime}`;
     
     const closeButton = document.createElement('button');
-    closeButton.className = 'btn btn-danger';
-    closeButton.textContent = 'Close';
+    closeButton.className = 'btn btn-success';
+    closeButton.textContent = 'DONE';
     closeButton.style.position = 'absolute';
     closeButton.style.top = '10px';
     closeButton.style.right = '10px';
