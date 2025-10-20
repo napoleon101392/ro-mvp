@@ -1,5 +1,5 @@
-const CACHE_NAME = 'ro-mvp-timer-v2';
-const RUNTIME_CACHE = 'ro-mvp-runtime-v2';
+const CACHE_NAME = 'ro-mvp-timer-v4';
+const RUNTIME_CACHE = 'ro-mvp-runtime-v4';
 
 // Assets to cache on install
 const PRECACHE_URLS = [

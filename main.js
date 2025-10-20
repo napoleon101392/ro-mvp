@@ -64,6 +64,21 @@ class MVPTimer {
         this.loadCustomSpawnSettings();
         this.loadSavedTimers();
         this.checkForUrlActions();
+        this.setKillTimeConstraints();
+    }
+
+    setKillTimeConstraints() {
+        // Set max time to current time
+        const now = new Date();
+        const currentTime = now.toTimeString().slice(0, 5); // Format: HH:MM
+        this.elements.killTimeInput.setAttribute('max', currentTime);
+        
+        // Update max time every minute
+        setInterval(() => {
+            const now = new Date();
+            const currentTime = now.toTimeString().slice(0, 5);
+            this.elements.killTimeInput.setAttribute('max', currentTime);
+        }, 60000);
     }
 
     initializeElements() {
@@ -145,7 +160,7 @@ class MVPTimer {
             const killTime = this.parseKillTime();
             
             if (!this.isValidKillTime(killTime)) {
-                this.showError('Invalid kill time');
+                this.showError('Kill time cannot be in the future. Please enter a past time.');
                 return;
             }
 
@@ -192,9 +207,10 @@ class MVPTimer {
         const killTime = new Date();
         killTime.setHours(hours, minutes, 0, 0);
         
-        // If time is in future, assume it was yesterday
+        // Check if time is in the future (more than 1 minute ahead)
         const timeDiff = killTime.getTime() - now.getTime();
-        if (timeDiff > 60 * 60 * 1000) {
+        if (timeDiff > 60 * 1000) {
+            // Assume it was yesterday
             killTime.setDate(killTime.getDate() - 1);
         }
         
@@ -204,7 +220,8 @@ class MVPTimer {
     isValidKillTime(killTime) {
         const now = new Date();
         const timeDiff = now.getTime() - killTime.getTime();
-        return timeDiff >= -60 * 60 * 1000 && timeDiff <= 24 * 60 * 60 * 1000;
+        // Kill time must be in the past (not future) and within last 24 hours
+        return timeDiff >= 0 && timeDiff <= 24 * 60 * 60 * 1000;
     }
 
     calculateRespawnTime(killTime, mvp) {
@@ -558,88 +575,133 @@ class MVPTimer {
     }
 
     addCustomSpawnInput() {
-        // Create a modal-like prompt with select dropdown
-        const modal = document.createElement('div');
-        modal.className = 'modal fade show';
-        modal.style.cssText = 'display: block; background: rgba(0,0,0,0.5);';
-        modal.innerHTML = `
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Custom Spawn Time</h5>
-                        <button type="button" class="btn-close" onclick="this.closest('.modal').remove()"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="custom-mvp-select" class="form-label">Select MVP</label>
-                            <select id="custom-mvp-select" class="form-select">
-                                <option value="">Choose an MVP...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="custom-spawn-time" class="form-label">Spawn Time (minutes)</label>
-                            <input type="number" id="custom-spawn-time" class="form-control" min="1" value="60">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="save-custom-spawn">Save</button>
-                    </div>
-                </div>
-            </div>
-        `;
+        // Create inline input group for adding new custom spawn
+        const div = document.createElement('div');
+        div.className = 'input-group mb-2';
+        div.id = 'new-custom-spawn-input';
         
-        document.body.appendChild(modal);
+        // Create select dropdown for MVP
+        const select = document.createElement('select');
+        select.className = 'form-select';
+        select.style.maxWidth = '200px';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Choose MVP...';
+        select.appendChild(defaultOption);
         
-        // Populate MVP select
-        const select = document.getElementById('custom-mvp-select');
+        // Populate with available MVPs
         this.mvpData.forEach(mvp => {
             const option = document.createElement('option');
             option.value = mvp.name;
-            option.textContent = mvp.name + ' (' + mvp.size + ')';
+            option.textContent = mvp.name;
             select.appendChild(option);
         });
         
-        // Handle save
-        const self = this;
-        document.getElementById('save-custom-spawn').onclick = function() {
+        // Create number input for spawn time
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'form-control';
+        input.placeholder = 'Minutes';
+        input.min = '1';
+        input.value = '60';
+        
+        // Create save button
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'btn btn-success';
+        saveBtn.textContent = 'Add';
+        saveBtn.onclick = () => {
             const mvpName = select.value;
-            const time = document.getElementById('custom-spawn-time').value;
+            const time = input.value;
             
             if (!mvpName) {
-                alert('Please select an MVP');
+                this.showError('Please select an MVP');
                 return;
             }
             
-            if (time && !isNaN(time) && time > 0) {
-                self.customSpawnTimes[mvpName] = parseInt(time);
-                self.saveCustomSpawnTimes();
-                self.renderCustomSpawnInputs();
-                self.elements.mvpSelect.innerHTML = '<option value="">Choose an MVP...</option>';
-                self.populateMvpDropdown();
-                self.showSuccess('Custom spawn time added for ' + mvpName);
-                modal.remove();
-            } else {
-                alert('Please enter a valid spawn time');
+            if (!time || isNaN(time) || time < 1) {
+                this.showError('Please enter a valid spawn time (minimum 1 minute)');
+                return;
             }
+            
+            this.customSpawnTimes[mvpName] = parseInt(time);
+            this.saveCustomSpawnTimes();
+            this.renderCustomSpawnInputs();
+            this.elements.mvpSelect.innerHTML = '<option value="">Choose an MVP...</option>';
+            this.populateMvpDropdown();
+            this.showSuccess('Custom spawn time added for ' + mvpName);
         };
+        
+        // Create cancel button
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'btn btn-secondary';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.onclick = () => {
+            div.remove();
+        };
+        
+        div.appendChild(select);
+        div.appendChild(input);
+        div.appendChild(saveBtn);
+        div.appendChild(cancelBtn);
+        
+        // Remove any existing new input before adding
+        const existing = document.getElementById('new-custom-spawn-input');
+        if (existing) {
+            existing.remove();
+        }
+        
+        this.elements.customSpawns.appendChild(div);
+        select.focus();
     }
 
     createCustomSpawnInput(mvpName, time) {
         const div = document.createElement('div');
         div.className = 'input-group mb-2';
-        div.innerHTML = 
-            '<span class="input-group-text" style="min-width: 120px;">' + mvpName + '</span>' +
-            '<input type="number" class="form-control" value="' + time + '" min="1" ' +
-                   'onchange="mvpTimer.updateCustomSpawnTime(\'' + mvpName + '\', this.value)">' +
-            '<button class="btn btn-outline-danger" onclick="mvpTimer.removeCustomSpawnTime(\'' + mvpName + '\')">×</button>';
+        
+        const span = document.createElement('span');
+        span.className = 'input-group-text';
+        span.style.minWidth = '120px';
+        span.textContent = mvpName;
+        
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'form-control';
+        input.value = time;
+        input.min = '1';
+        
+        // Handle both onchange and onblur for better mobile compatibility
+        const updateHandler = () => {
+            this.updateCustomSpawnTime(mvpName, input.value);
+        };
+        input.addEventListener('change', updateHandler);
+        input.addEventListener('blur', updateHandler);
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-outline-danger';
+        deleteBtn.textContent = '×';
+        deleteBtn.onclick = () => this.removeCustomSpawnTime(mvpName);
+        
+        div.appendChild(span);
+        div.appendChild(input);
+        div.appendChild(deleteBtn);
+        
         this.elements.customSpawns.appendChild(div);
     }
 
     updateCustomSpawnTime(mvpName, time) {
-        if (time && !isNaN(time) && time > 0) {
-            this.customSpawnTimes[mvpName] = parseInt(time);
-            this.saveCustomSpawnTimes();
+        const parsedTime = parseInt(time);
+        
+        if (time && !isNaN(parsedTime) && parsedTime > 0) {
+            // Only update if value actually changed
+            if (this.customSpawnTimes[mvpName] !== parsedTime) {
+                this.customSpawnTimes[mvpName] = parsedTime;
+                this.saveCustomSpawnTimes();
+                this.showSuccess('Custom spawn time updated for ' + mvpName);
+            }
+        } else if (time !== '' && time !== null && time !== undefined) {
+            // Only show error if user entered something invalid (not empty)
+            this.showError('Please enter a valid spawn time (minimum 1 minute)');
+            this.renderCustomSpawnInputs(); // Reset to previous value
         }
     }
 
